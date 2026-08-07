@@ -1,0 +1,55 @@
+# Logs & Debugging
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data & Caches
+pids
+*.pid
+*.seed
+*.pid.lock
+.cache
+.parcel-cache
+
+# Dependencies (Heavy folder - auto installed via `npm install`)
+node_modules/
+jspm_packages/
+
+# Production Build outputs
+dist/
+dist-ssr/
+build/
+*.out
+
+# Local Environment & API Keys (DO NOT COMMIT SECRETS)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor specific settings
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
