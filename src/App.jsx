@@ -25,7 +25,10 @@ import {
   Cloud,
   Rocket,
   ArrowLeft,
-  X
+  X,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw
 } from 'lucide-react';
 
 function WhatsAppIcon({ size = 18, color = "currentColor" }) {
@@ -499,6 +502,272 @@ function AboutMeSection({ onGoHome, onOpenVideo }) {
   );
 }
 
+function LoomDemoPage({ onGoHome }) {
+  const [selectedImg, setSelectedImg] = useState(null);
+
+  const automationArchitecture = [
+    {
+      id: 1,
+      title: "Send Product Recommendation using GPT",
+      category: "AI Product Recommendations",
+      image: "/Images/Send Product Recommendation using GPT.png",
+      fallbackImg: "/Images/Ai CHatbot.jpg",
+      desc: "Intelligent GPT-powered AI workflow that analyzes customer behavior, evaluates user intent, and automatically delivers tailored product recommendations via SMS, email, and GHL CRM.",
+      badge: "GPT AI Recommendation"
+    },
+    {
+      id: 2,
+      title: "FAQ Auto Reply",
+      category: "24/7 Instant Response",
+      image: "/Images/FAQ Auto Reply.png",
+      fallbackImg: "/Images/Ai CHatbot.jpg",
+      desc: "Automated instant response system that answers frequently asked questions across web chat, SMS, and GHL channels to keep leads engaged instantly.",
+      badge: "FAQ Auto-Reply"
+    },
+    {
+      id: 3,
+      title: "Long-Term Nurture-Reactivation Email Sequence",
+      category: "Reactivation Sequence",
+      image: "/Images/Long-Term Nurture-Reactivation Email Sequence.png",
+      fallbackImg: "/Images/Email Marketing.webp",
+      desc: "Strategic long-term email drip campaign designed to re-engage cold leads, build trust over time, and convert dormant prospects into booked clients.",
+      badge: "Reactivation Drip"
+    },
+    {
+      id: 4,
+      title: "Email Drip Sequence",
+      category: "Email Marketing Automation",
+      image: "/Images/Email Drip Sequence.png",
+      fallbackImg: "/Images/Email Marketing.webp",
+      desc: "High-converting multi-day email sequence that delivers value, introduces services, and drives automated sales pipeline movement.",
+      badge: "Email Drip"
+    },
+
+
+
+    {
+      id: 9,
+      title: "GoHighLevel Recipe Birthday Template",
+      category: "Automated Birthday Nurturing",
+      image: "/Images/gohighlevel-recipe-birthday-template.png",
+      fallbackImg: "/Images/Automation.jpg",
+      desc: "Automated birthday promotion sequence that triggers personalized birthday offers, SMS discounts, and email greetings to boost customer retention.",
+      badge: "Birthday Recipe"
+    },
+    {
+      id: 10,
+      title: "GoHighLevel FB Messenger Automation",
+      category: "Meta Messenger Integration",
+      image: "/Images/gohighlevel-fb-messenger.png",
+      fallbackImg: "/Images/Ai CHatbot.jpg",
+      desc: "Seamless Facebook Messenger auto-reply system that captures leads directly from social media ads, answers FAQs, and syncs contacts into GHL CRM.",
+      badge: "FB Automation"
+    }
+  ];
+
+  return (
+    <section className="loom-demo-page-section">
+      {/* Back Button */}
+      <button onClick={onGoHome} className="about-back-btn">
+        <ArrowLeft size={18} /> Back to Home
+      </button>
+
+      {/* Main Header */}
+      <div className="loom-page-header">
+        <div className="services-subtitle-badge">
+          <span className="badge-pulse"></span>
+          LIVE CLIENT DEMO & AUTOMATION ARCHITECTURE
+        </div>
+        <h1 className="loom-page-title">
+          Client Loom Video Presentation & Automation Systems
+        </h1>
+        <p className="loom-page-subtitle">
+          Watch our in-depth walkthrough video below and explore the actual GoHighLevel automation structures, CRM pipelines, and AI systems built for our clients.
+        </p>
+      </div>
+
+      {/* Main Showcase Video Player Container */}
+      <div className="loom-page-video-wrapper">
+        <div className="loom-browser-top-bar">
+          <div className="browser-dots">
+            <span className="dot dot-red"></span>
+            <span className="dot dot-yellow"></span>
+            <span className="dot dot-green"></span>
+          </div>
+          <div className="loom-browser-title">
+            <span>📹 Client Loom Video Presentation - Live Systems Walkthrough</span>
+          </div>
+        </div>
+        <div className="loom-video-frame">
+          <video 
+            controls 
+            autoPlay
+            playsInline
+            className="loom-video-element"
+            onError={(e) => {
+              if (!e.target.dataset.triedFallback) {
+                e.target.dataset.triedFallback = "true";
+                e.target.src = "/Images/Fiver Video.mp4";
+              }
+            }}
+          >
+            <source src="/Images/loom video.mp4" type="video/mp4" />
+            <source src="/Images/loom video" type="video/mp4" />
+            <source src="/Images/Fiver Video.mp4" type="video/mp4" />
+            Your browser does not support HTML video.
+          </video>
+        </div>
+      </div>
+
+      {/* Section Divider */}
+      <div className="works-header" style={{ marginTop: '80px', marginBottom: '30px' }}>
+        <div className="services-subtitle-badge">
+          <span className="badge-pulse"></span>
+          SYSTEM STRUCTURE & WORKFLOW ARCHITECTURE
+        </div>
+        <h2 className="works-main-title" style={{ fontSize: '36px' }}>
+          Explore Our GoHighLevel Automations & Systems
+        </h2>
+        <p className="why-description" style={{ maxWidth: '680px', margin: '12px auto 0 auto' }}>
+          Click on any automation workflow below to view the detailed blueprint structure.
+        </p>
+      </div>
+
+      {/* Automation Images & Structures Grid */}
+      <div className="automation-grid">
+        {automationArchitecture.map((item) => (
+          <div 
+            className="automation-card" 
+            key={item.id}
+            onClick={(e) => {
+              const currentImg = e.currentTarget.querySelector('.automation-card-img');
+              const activeSrc = (currentImg && currentImg.src) ? currentImg.src : (item.image || item.fallbackImg);
+              setSelectedImg({
+                ...item,
+                activeSrc
+              });
+            }}
+          >
+            <div className="automation-card-image-box">
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="automation-card-img"
+                onError={(e) => {
+                  const target = e.target;
+                  if (!target.dataset.triedJpg && target.src.endsWith('.png')) {
+                    target.dataset.triedJpg = 'true';
+                    target.src = target.src.replace('.png', '.jpg');
+                  } else if (!target.dataset.triedWebp && target.src.endsWith('.jpg')) {
+                    target.dataset.triedWebp = 'true';
+                    target.src = target.src.replace('.jpg', '.webp');
+                  } else if (item.fallbackImg && target.src !== item.fallbackImg) {
+                    target.src = item.fallbackImg;
+                  }
+                }}
+              />
+              <div className="automation-image-overlay">
+                <span className="preview-pill"><ExternalLink size={14} /> View Structure</span>
+              </div>
+              <span className="automation-badge">{item.badge}</span>
+            </div>
+            <div className="automation-card-content">
+              <span className="automation-cat">{item.category}</span>
+              <h3 className="automation-title">{item.title}</h3>
+              <p className="automation-desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Image Zoom Modal */}
+      {selectedImg && (
+        <AutomationModalZoom selectedImg={selectedImg} onClose={() => setSelectedImg(null)} />
+      )}
+
+      {/* CTA Box */}
+      <div className="about-cta-banner" style={{ marginTop: '70px' }}>
+        <div className="about-cta-content">
+          <h3 className="about-cta-heading">Want a Similar Custom Automation System?</h3>
+          <p className="about-cta-sub">Let's build a custom GoHighLevel workflow, CRM pipeline, and high-converting funnel for your agency.</p>
+        </div>
+        <a 
+          href="https://wa.me/923462973219" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="btn-hire-me"
+        >
+          Discuss Your Automation <ArrowRight size={18} />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function AutomationModalZoom({ selectedImg, onClose }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && onClose) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  if (!selectedImg) return null;
+
+  const activeSrc = selectedImg.activeSrc || selectedImg.image || selectedImg.fallbackImg || '';
+
+  return (
+    <div className="video-modal-overlay" onClick={onClose}>
+      <div className="automation-modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="video-modal-header">
+          <div className="video-modal-title">
+            <span className="video-modal-title-dot"></span>
+            <span>{selectedImg.title || 'Automation Workflow Structure'}</span>
+          </div>
+          <button 
+            type="button"
+            className="video-modal-close-btn" 
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="automation-modal-body">
+          <div className="automation-modal-img-viewport">
+            <img 
+              src={activeSrc} 
+              alt={selectedImg.title || 'Automation Diagram'} 
+              className="automation-modal-img"
+              onError={(e) => {
+                const target = e.target;
+                if (!target.dataset.triedJpg && target.src.endsWith('.png')) {
+                  target.dataset.triedJpg = 'true';
+                  target.src = target.src.replace('.png', '.jpg');
+                } else if (!target.dataset.triedWebp && target.src.endsWith('.jpg')) {
+                  target.dataset.triedWebp = 'true';
+                  target.src = target.src.replace('.jpg', '.webp');
+                } else if (selectedImg.fallbackImg && target.src !== selectedImg.fallbackImg) {
+                  target.src = selectedImg.fallbackImg;
+                }
+              }}
+            />
+          </div>
+
+          <div className="automation-modal-info">
+            <h4>{selectedImg.title || 'Automation Workflow'}</h4>
+            <p>{selectedImg.desc || ''}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -540,7 +809,13 @@ function App() {
       return;
     }
 
-    const wasAbout = activeTab === 'about';
+    if (targetId === 'loom-demo') {
+      setActiveTab('loom-demo');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const wasOther = activeTab !== 'home';
     setActiveTab('home');
 
     if (targetId === 'home') {
@@ -560,7 +835,7 @@ function App() {
           behavior: 'smooth'
         });
       }
-    }, wasAbout ? 60 : 20);
+    }, wasOther ? 60 : 20);
   };
 
   return (
@@ -706,6 +981,14 @@ function App() {
                   About Me
                 </button>
               </li>
+              <li className="nav-link-item">
+                <button 
+                  onClick={(e) => handleNavClick(e, 'loom-demo')} 
+                  className={`nav-link border-none-btn ${activeTab === 'loom-demo' ? 'active-nav-link' : ''}`}
+                >
+                  Automation Demo
+                </button>
+              </li>
             </ul>
           </nav>
 
@@ -715,10 +998,12 @@ function App() {
         </header>
 
         {/* ====================================================
-            PAGE CONTENT SWITCHING (HOME VS ABOUT ME)
+            PAGE CONTENT SWITCHING (HOME VS ABOUT ME VS LOOM DEMO)
            ==================================================== */}
         {activeTab === 'about' ? (
           <AboutMeSection onGoHome={(e) => handleNavClick(e, 'home')} onOpenVideo={() => setIsVideoModalOpen(true)} />
+        ) : activeTab === 'loom-demo' ? (
+          <LoomDemoPage onGoHome={(e) => handleNavClick(e, 'home')} />
         ) : (
           <>
             {/* Main Hero Section Grid */}
@@ -814,7 +1099,7 @@ function App() {
                       </textPath>
                     </text>
                   </svg>
-                  <div className="exp-number">5</div>
+                  <div className="exp-number">3.5</div>
                   <div className="exp-years">YEARS</div>
                 </div>
 
@@ -1005,6 +1290,72 @@ function App() {
                 <a href="https://wa.me/923462973219" target="_blank" rel="noopener noreferrer" className="btn-order-now">
                   Order Now!
                 </a>
+              </div>
+
+              {/* Loom Video Showcase Presentation Below Order Now - Click Navigates to Loom & Automation Page */}
+              <div className="loom-video-showcase-wrapper">
+                <div 
+                  className="loom-video-card loom-video-clickable-card"
+                  onClick={(e) => handleNavClick(e, 'loom-demo')}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleNavClick(e, 'loom-demo'); }}
+                >
+                  <div className="loom-video-header">
+                    <div className="services-subtitle-badge">
+                      <span className="badge-pulse"></span>
+                      CLIENT DEMO & AUTOMATION SHOWCASE
+                    </div>
+                    <h3 className="loom-video-title">
+                      Watch Our Live Client Loom Presentation & Automation Systems
+                    </h3>
+                    <p className="loom-video-subtitle">
+                      Click below to watch the full Loom Video demo and explore our complete GoHighLevel CRM & workflow automation structures.
+                    </p>
+                  </div>
+
+                  <div className="loom-video-player-container loom-clickable-preview">
+                    <div className="loom-browser-top-bar">
+                      <div className="browser-dots">
+                        <span className="dot dot-red"></span>
+                        <span className="dot dot-yellow"></span>
+                        <span className="dot dot-green"></span>
+                      </div>
+                      <div className="loom-browser-title">
+                        <span>📹 Click to Open Full Loom Video & Automation Structure Page</span>
+                      </div>
+                    </div>
+                    <div className="loom-video-frame loom-preview-frame">
+                      {/* Real Loom Video Frame Thumbnail Preview */}
+                      <video 
+                        className="loom-thumbnail-bg-img"
+                        preload="metadata"
+                        muted
+                        playsInline
+                        onError={(e) => {
+                          if (!e.target.dataset.triedFallback) {
+                            e.target.dataset.triedFallback = "true";
+                            e.target.src = "/Images/Fiver Video.mp4#t=1.0";
+                          }
+                        }}
+                      >
+                        <source src="/Images/loom video.mp4#t=1.0" type="video/mp4" />
+                        <source src="/Images/loom video#t=1.0" type="video/mp4" />
+                        <source src="/Images/Fiver Video.mp4" type="video/mp4" />
+                      </video>
+                      <div className="loom-thumbnail-dark-overlay"></div>
+
+                      <div className="loom-play-btn-pulse">
+                        <div className="loom-play-icon-circle">
+                          <Play size={36} className="loom-play-svg" />
+                        </div>
+                      </div>
+                      <div className="loom-preview-overlay">
+                        <span className="loom-click-badge">Click Here to Open Video & Automation Blueprint Page →</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
 
