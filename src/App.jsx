@@ -24,7 +24,8 @@ import {
   Database,
   Cloud,
   Rocket,
-  ArrowLeft
+  ArrowLeft,
+  X
 } from 'lucide-react';
 
 function WhatsAppIcon({ size = 18, color = "currentColor" }) {
@@ -374,7 +375,7 @@ function RenderTestimonialCard({ item }) {
   );
 }
 
-function AboutMeSection({ onGoHome }) {
+function AboutMeSection({ onGoHome, onOpenVideo }) {
   return (
     <section className="about-me-page-section">
       {/* Back Button */}
@@ -467,14 +468,32 @@ function AboutMeSection({ onGoHome }) {
           <h3 className="about-cta-heading">Ready to Launch Your Next Big Project?</h3>
           <p className="about-cta-sub">Let's connect on WhatsApp to discuss your funnel, CRM, or full stack website requirements.</p>
         </div>
-        <a 
-          href="https://wa.me/923462973219" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="btn-hire-me"
-        >
-          Let's Work Together <ArrowRight size={18} />
-        </a>
+        <div className="about-cta-buttons" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div 
+            className="video-btn-container" 
+            onClick={onOpenVideo} 
+            role="button" 
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpenVideo && onOpenVideo(); }}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="play-circle">
+              <Play className="play-icon" />
+            </div>
+            <div className="video-text">
+              <span className="video-label-top">WATCH</span>
+              <span className="video-label-bottom">Intro Video</span>
+            </div>
+          </div>
+          <a 
+            href="https://wa.me/923462973219" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn-hire-me"
+          >
+            Let's Work Together <ArrowRight size={18} />
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -482,6 +501,25 @@ function AboutMeSection({ onGoHome }) {
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsVideoModalOpen(false);
+      }
+    };
+    if (isVideoModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isVideoModalOpen]);
 
   const scrollToTop = (e) => {
     if (e) e.preventDefault();
@@ -680,7 +718,7 @@ function App() {
             PAGE CONTENT SWITCHING (HOME VS ABOUT ME)
            ==================================================== */}
         {activeTab === 'about' ? (
-          <AboutMeSection onGoHome={(e) => handleNavClick(e, 'home')} />
+          <AboutMeSection onGoHome={(e) => handleNavClick(e, 'home')} onOpenVideo={() => setIsVideoModalOpen(true)} />
         ) : (
           <>
             {/* Main Hero Section Grid */}
@@ -711,7 +749,13 @@ function App() {
                     Hire Me <ArrowRight size={18} />
                   </a>
 
-                  <div className="video-btn-container">
+                  <div 
+                    className="video-btn-container" 
+                    onClick={() => setIsVideoModalOpen(true)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsVideoModalOpen(true); }}
+                  >
                     <div className="play-circle">
                       <Play className="play-icon" />
                     </div>
@@ -1160,6 +1204,43 @@ function App() {
         </footer>
 
       </div>
+
+      {/* Video Lightbox Modal */}
+      {isVideoModalOpen && (
+        <div 
+          className="video-modal-overlay" 
+          onClick={() => setIsVideoModalOpen(false)}
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className="video-modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="video-modal-header">
+              <div className="video-modal-title">
+                <span className="video-modal-title-dot"></span>
+                <span>Taha Hussain - Intro Video</span>
+              </div>
+              <button 
+                className="video-modal-close-btn" 
+                onClick={() => setIsVideoModalOpen(false)}
+                aria-label="Close video modal"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="video-modal-player-wrapper">
+              <video 
+                controls 
+                autoPlay 
+                playsInline
+                src="/Images/Fiver Video.mp4" 
+                className="video-modal-element"
+              >
+                Your browser does not support HTML video playback.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
